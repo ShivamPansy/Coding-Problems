@@ -1,0 +1,60 @@
+Time complexity:-O(V+E)
+Space complexity:-O(V)
+
+// { Driver Code Starts
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector <int> bfs(vector<int> g[], int N);
+
+int main() {
+    int T;
+    cin >> T;
+    while (T--) {
+        int N, E;
+        cin >> N >> E;
+        vector<int> adj[N];
+        for (int i = 0; i < E; i++) {
+            int u, v;
+            cin >> u >> v;
+            adj[u].push_back(v);
+        }
+        vector <int> res = bfs(adj, N);
+        for (int i = 0; i < res.size (); i++) cout << res[i] << " ";
+        cout << endl;
+    }
+}// } Driver Code Ends
+
+
+/* You have to complete this function*/
+
+/* Function to do BFS of graph
+*  g[]: adj list of the graph
+*  N : number of vertices
+*/
+void bfshelper(bool visited[],vector<int>&res,vector<int>g[],int N,int i){
+    queue<int>q;
+    q.push(i);
+    while(q.empty()==false){
+        int u=q.front();
+        q.pop();
+        res.push_back(u);
+        for(int x:g[u]){
+            if(visited[x]==false){
+                visited[x]=true;
+                q.push(x);
+            }
+        } 
+    }
+}
+vector <int> bfs(vector<int> g[], int N) {
+    bool visited[N];
+    vector<int>res;
+    for(int i=0;i<N;i++){
+        visited[i]=false;
+    }
+        visited[0]=true;
+        bfshelper(visited,res,g,N,0);
+    return res;
+}
